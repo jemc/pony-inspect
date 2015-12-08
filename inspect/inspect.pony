@@ -1,7 +1,4 @@
 
-use net = "net"
-use "collections"
-
 type _Inspectable is Any box
 
 interface box _ReadMap[A, B]
@@ -13,6 +10,10 @@ interface _StringableNoArg
 
 interface _InspectMethodNoArg
   fun inspect(): String
+
+interface _PeekU8Buffer
+  fun size(): USize
+  fun peek_u8(i: USize): U8?
 
 primitive Inspect
   fun apply(input: _Inspectable): String val =>
@@ -95,10 +96,11 @@ primitive Inspect
     | let x: _InspectMethodNoArg box => output.append(x.inspect())
     | let x: _StringableNoArg box    => output.append(x.string())
     | let x: Stringable box          => output.append(x.string())
-    | let x: net.Buffer box =>
+    | let x: _PeekU8Buffer box =>
       let ary = Array[U8]
-      for i in Range(0, x.size()) do
-        ary.push(try x.peek_u8(i) else 0 end)
+      var i: USize = 0
+      while i < x.size() do
+        ary.push(try x.peek_u8(i = i + 1) else 0 end)
       end
       output.append(apply(ary))
     else

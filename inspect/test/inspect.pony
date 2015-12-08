@@ -2,7 +2,8 @@
 use "ponytest"
 use ".."
 
-use "collections"
+use net = "net"
+use collections = "collections"
 
 class TestInspect is UnitTest
   fun name(): String => "Inspect"
@@ -24,10 +25,18 @@ class TestInspect is UnitTest
     )
     
     h.expect_eq[String](
-      Inspect(List[U8].append(
+      Inspect(collections.List[U8].append(
         [as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255])),
       "[0x00, 0x01, 0x10,  'A',  'B',  '\"', '\\'',  '~', 0x7F, 0x80, 0xFF]",
-      "List[U8]"
+      "collections.List[U8]"
+    )
+    
+    h.expect_eq[String](
+      Inspect(net.Buffer.append(recover
+        [as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255]
+      end)),
+      "[0x00, 0x01, 0x10,  'A',  'B',  '\"', '\\'',  '~', 0x7F, 0x80, 0xFF]",
+      "net.Buffer"
     )
     
     h.expect_eq[String](
@@ -59,12 +68,12 @@ class TestInspect is UnitTest
     )
     
     h.expect_eq[String](
-      Inspect(let map1 = Map[String, String]
+      Inspect(let map1 = collections.Map[String, String]
                   map1("abc") = "ABC"
                   map1("xyz") = "XYZ"
                   map1),
       "{\"abc\": \"ABC\", \"xyz\": \"XYZ\"}",
-      "Map[String, String]"
+      "collections.Map[String, String]"
     )
     
     h.expect_eq[String](
