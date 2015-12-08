@@ -22,7 +22,7 @@ primitive Inspect
     The resulting string is intended for human readability and debugging,
     and is subject to change as necessary to improve future readability.
     """
-    let output: String trn = recover String end
+    let output = recover trn String end
     
     match input
     | let x: String box =>
@@ -119,7 +119,7 @@ primitive Inspect
   fun out(input: _Inspectable, input2: _Inspectable = None,
           input3: _Inspectable = None, input4: _Inspectable = None) =>
     """
-    Print the inspect form of an object to the STDOUT stream.
+    Print the inspect form of one or more objects to the STDOUT stream.
     This is for debugging purposes only, as it is not concurrency-safe.
     """
     if input4 isnt None then
