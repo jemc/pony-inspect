@@ -44,4 +44,18 @@ class TestInspect is UnitTest
       "Array[Array[U8]]"
     )
     
+    h.expect_eq[String](
+      Inspect([
+        [["A", "B"], ["C", "D"]],
+        [["E", "F"], ["G", "H"]],
+        [["I", "J"], ["K", "L"]],
+        [["M", "N"], ["O", "P"]]
+      ]),
+      ("[[[\"A\", \"B\"], [\"C\", \"D\"]], "
+      + "[[\"E\", \"F\"], [\"G\", \"H\"]], "
+      + "[[\"I\", \"J\"], [\"K\", \"L\"]], "
+      + "[[\"M\", \"N\"], [\"O\", \"P\"]]]"),
+      "Array[Array[Array[String]]]"
+    )
+    
     true

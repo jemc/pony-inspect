@@ -60,7 +60,7 @@ primitive Inspect
         end
       end
       output.push(']')
-    | let x: ReadSeq[ReadSeq[U8]] box =>
+    | let x: ReadSeq[_Inspectable] box =>
       output.push('[')
       let iter = x.values()
       try
