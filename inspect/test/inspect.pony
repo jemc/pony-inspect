@@ -58,4 +58,13 @@ class TestInspect is UnitTest
       "Array[Array[Array[String]]]"
     )
     
+    h.expect_eq[String](
+      Inspect(let map1 = Map[String, String]
+                  map1("abc") = "ABC"
+                  map1("xyz") = "XYZ"
+                  map1),
+      "{\"abc\": \"ABC\", \"xyz\": \"XYZ\"}",
+      "Map[String, String]"
+    )
+    
     true

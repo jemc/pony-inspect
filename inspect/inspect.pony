@@ -7,6 +7,10 @@ type _Inspectable is Any box
 interface _StringableNoArg
   fun string(): String
 
+interface box _ReadMap[A, B]
+  fun keys(): Iterator[A]^
+  fun values(): Iterator[B]^
+
 primitive Inspect
   fun apply(input: _Inspectable): String val =>
     """
@@ -70,16 +74,16 @@ primitive Inspect
         end
       end
       output.push(']')
-    | let x: Map[String, _Inspectable] box =>
+    | let x: _ReadMap[_Inspectable, _Inspectable] =>
       output.push('{')
-      let iter = x.pairs()
+      (let keys, let values) = (x.keys(), x.values())
       try
-        while iter.has_next() do
-          (let key, let value) = iter.next()
-          output.append(Inspect(key))
-          output.push(':')
-          output.append(Inspect(value))
-          if iter.has_next() then
+        while keys.has_next() do
+          (let key, let value) = (keys.next(), values.next())
+          output.append(apply(key))
+          output.append(": ")
+          output.append(apply(value))
+          if keys.has_next() then
             output.append(", ")
           end
         end
