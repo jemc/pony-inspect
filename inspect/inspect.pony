@@ -23,7 +23,9 @@ primitive Inspect
       try
         while iter.has_next() do
           let byte = iter.next()
-          if byte < 0x10 then
+          if byte == '"' then
+            output.append("\\\"")
+          elseif byte < 0x10 then
             output.append("\\x0" + byte.string(FormatHexBare))
           elseif byte < 0x20 then
             output.append("\\x" + byte.string(FormatHexBare))
