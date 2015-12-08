@@ -67,4 +67,21 @@ class TestInspect is UnitTest
       "Map[String, String]"
     )
     
+    h.expect_eq[String](
+      Inspect(object
+        fun string(): String => "custom string"
+      end),
+      "custom string",
+      "custom string method"
+    )
+    
+    h.expect_eq[String](
+      Inspect(object
+        fun inspect(): String => "custom inspect"
+        fun string():  String => "custom string"
+      end),
+      "custom inspect",
+      "custom inspect method"
+    )
+    
     true
