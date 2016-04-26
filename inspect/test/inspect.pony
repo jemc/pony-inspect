@@ -7,31 +7,31 @@ use collections = "collections"
 
 class TestInspect is UnitTest
   fun name(): String => "Inspect"
-  fun ref apply(h: TestHelper): TestResult =>
+  fun ref apply(h: TestHelper) =>
     
-    h.expect_eq[String](Inspect(true), "true")
-    h.expect_eq[String](Inspect(false), "false")
+    h.assert_eq[String](Inspect(true), "true")
+    h.assert_eq[String](Inspect(false), "false")
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect("abc-\x00-def-\x09-ghi-\x10-jkl-\x19-!0123456789'\"-ABCXYZ~"),
       "\"abc-\\x00-def-\\x09-ghi-\\x10-jkl-\\x19-!0123456789'\\\"-ABCXYZ~\"",
       "String"
     )
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect([as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255]),
       "[0x00, 0x01, 0x10,  'A',  'B',  '\"', '\\'',  '~', 0x7F, 0x80, 0xFF]",
       "Array[U8]"
     )
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect(collections.List[U8].append(
         [as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255])),
       "[0x00, 0x01, 0x10,  'A',  'B',  '\"', '\\'',  '~', 0x7F, 0x80, 0xFF]",
       "collections.List[U8]"
     )
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect(net.Buffer.append(recover
         [as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255]
       end)),
@@ -39,7 +39,7 @@ class TestInspect is UnitTest
       "net.Buffer"
     )
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect([
         [as U8:  0,  1,  2,  3],
         [as U8:  4,  5,  6,  7],
@@ -53,7 +53,7 @@ class TestInspect is UnitTest
       "Array[Array[U8]]"
     )
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect([
         [["A", "B"], ["C", "D"]],
         [["E", "F"], ["G", "H"]],
@@ -67,7 +67,7 @@ class TestInspect is UnitTest
       "Array[Array[Array[String]]]"
     )
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect(let map1 = collections.Map[String, String]
                   map1("abc") = "ABC"
                   map1("xyz") = "XYZ"
@@ -76,7 +76,7 @@ class TestInspect is UnitTest
       "collections.Map[String, String]"
     )
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect(object
         fun string(): String => "custom string"
       end),
@@ -84,7 +84,7 @@ class TestInspect is UnitTest
       "custom string method"
     )
     
-    h.expect_eq[String](
+    h.assert_eq[String](
       Inspect(object
         fun inspect(): String => "custom inspect"
         fun string():  String => "custom string"
@@ -92,5 +92,3 @@ class TestInspect is UnitTest
       "custom inspect",
       "custom inspect method"
     )
-    
-    true
