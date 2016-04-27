@@ -5,7 +5,7 @@ primitive _STDOUT
   This is for debugging purposes only, as it is not concurrency-safe.
   """
   fun write(data: String box) =>
-    @os_std_write[None](@os_stdout[Pointer[U8]](), data.cstring(), data.size())
+    @pony_os_std_write[None](@pony_os_stdout[Pointer[U8]](), data.cstring(), data.size())
   
   fun write_line(data: String box) =>
     write(data + "\n")
