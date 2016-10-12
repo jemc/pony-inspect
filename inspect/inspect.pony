@@ -23,7 +23,6 @@ primitive Inspect
     and is subject to change as necessary to improve future readability.
     """
     let output = recover trn String end
-    let hex_fmt = FormatSettingsInt.set_format(FormatHexBare)
     
     match input
     | let x: String box =>
@@ -35,13 +34,13 @@ primitive Inspect
           if byte == '"' then
             output.append("\\\"")
           elseif byte < 0x10 then
-            output.append("\\x0" + byte.string(hex_fmt))
+            output.append("\\x0" + _FormatHex[U8](byte))
           elseif byte < 0x20 then
-            output.append("\\x" + byte.string(hex_fmt))
+            output.append("\\x" + _FormatHex[U8](byte))
           elseif byte < 0x7F then
             output.push(byte)
           else
-            output.append("\\x" + byte.string(hex_fmt))
+            output.append("\\x" + _FormatHex[U8](byte))
           end
         end
       end
@@ -55,15 +54,15 @@ primitive Inspect
           if byte == '\'' then
             output.append("'\\''")
           elseif byte < 0x10 then
-            output.append("0x0" + byte.string(hex_fmt))
+            output.append("0x0" + _FormatHex[U8](byte))
           elseif byte < 0x20 then
-            output.append("0x" + byte.string(hex_fmt))
+            output.append("0x" + _FormatHex[U8](byte))
           elseif byte < 0x7F then
             output.append(" '")
             output.push(byte)
             output.append("'")
           else
-            output.append("0x" + byte.string(hex_fmt))
+            output.append("0x" + _FormatHex[U8](byte))
           end
           if iter.has_next() then output.append(", ") end
         end

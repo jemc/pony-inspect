@@ -2,7 +2,7 @@
 use "ponytest"
 use ".."
 
-use net = "net"
+use buffered = "buffered"
 use collections = "collections"
 
 class TestInspect is UnitTest
@@ -32,11 +32,11 @@ class TestInspect is UnitTest
     )
     
     h.assert_eq[String](
-      Inspect(net.Buffer.append(recover
+      Inspect(buffered.Reader.append(recover
         [as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255]
       end)),
       "[0x00, 0x01, 0x10,  'A',  'B',  '\"', '\\'',  '~', 0x7F, 0x80, 0xFF]",
-      "net.Buffer"
+      "buffered.Reader"
     )
     
     h.assert_eq[String](
