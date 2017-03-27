@@ -64,7 +64,7 @@ primitive Inspect
           else
             output.append("0x" + _FormatHex[U8](byte))
           end
-          if iter.has_next() then output.append(", ") end
+          if iter.has_next() then output.append("; ") end
         end
       end
       output.push(']')
@@ -74,7 +74,7 @@ primitive Inspect
       try
         while iter.has_next() do
           output.append(apply(iter.next()))
-          if iter.has_next() then output.append(", ") end
+          if iter.has_next() then output.append("; ") end
         end
       end
       output.push(']')
@@ -85,10 +85,10 @@ primitive Inspect
         while keys.has_next() do
           (let key, let value) = (keys.next(), values.next())
           output.append(apply(key))
-          output.append(": ")
+          output.append("->")
           output.append(apply(value))
           if keys.has_next() then
-            output.append(", ")
+            output.append("; ")
           end
         end
       end

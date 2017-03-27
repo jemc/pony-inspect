@@ -19,51 +19,51 @@ class TestInspect is UnitTest
     )
     
     h.assert_eq[String](
-      Inspect([as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255]),
-      "[0x00, 0x01, 0x10,  'A',  'B',  '\"', '\\'',  '~', 0x7F, 0x80, 0xFF]",
+      Inspect([as U8: 0; 1; 16; 65; 66; 34; 39; 126; 127; 128; 255]),
+      "[0x00; 0x01; 0x10;  'A';  'B';  '\"'; '\\'';  '~'; 0x7F; 0x80; 0xFF]",
       "Array[U8]"
     )
     
     h.assert_eq[String](
-      Inspect(collections.List[U8].append(
-        [as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255])),
-      "[0x00, 0x01, 0x10,  'A',  'B',  '\"', '\\'',  '~', 0x7F, 0x80, 0xFF]",
+      Inspect(collections.List[U8].>append(
+        [as U8: 0; 1; 16; 65; 66; 34; 39; 126; 127; 128; 255])),
+      "[0x00; 0x01; 0x10;  'A';  'B';  '\"'; '\\'';  '~'; 0x7F; 0x80; 0xFF]",
       "collections.List[U8]"
     )
     
     h.assert_eq[String](
-      Inspect(buffered.Reader.append(recover
-        [as U8: 0, 1, 16, 65, 66, 34, 39, 126, 127, 128, 255]
+      Inspect(buffered.Reader.>append(recover
+        [as U8: 0; 1; 16; 65; 66; 34; 39; 126; 127; 128; 255]
       end)),
-      "[0x00, 0x01, 0x10,  'A',  'B',  '\"', '\\'',  '~', 0x7F, 0x80, 0xFF]",
+      "[0x00; 0x01; 0x10;  'A';  'B';  '\"'; '\\'';  '~'; 0x7F; 0x80; 0xFF]",
       "buffered.Reader"
     )
     
     h.assert_eq[String](
       Inspect([
-        [as U8:  0,  1,  2,  3],
-        [as U8:  4,  5,  6,  7],
-        [as U8:  8,  9, 10, 11],
-        [as U8: 12, 13, 14, 15]
+        [as U8:  0;  1;  2;  3]
+        [as U8:  4;  5;  6;  7]
+        [as U8:  8;  9; 10; 11]
+        [as U8: 12; 13; 14; 15]
       ]),
-      ("[[0x00, 0x01, 0x02, 0x03], "
-      + "[0x04, 0x05, 0x06, 0x07], "
-      + "[0x08, 0x09, 0x0A, 0x0B], "
-      + "[0x0C, 0x0D, 0x0E, 0x0F]]"),
+      ("[[0x00; 0x01; 0x02; 0x03]; "
+      + "[0x04; 0x05; 0x06; 0x07]; "
+      + "[0x08; 0x09; 0x0A; 0x0B]; "
+      + "[0x0C; 0x0D; 0x0E; 0x0F]]"),
       "Array[Array[U8]]"
     )
     
     h.assert_eq[String](
       Inspect([
-        [["A", "B"], ["C", "D"]],
-        [["E", "F"], ["G", "H"]],
-        [["I", "J"], ["K", "L"]],
-        [["M", "N"], ["O", "P"]]
+        [["A"; "B"]; ["C"; "D"]]
+        [["E"; "F"]; ["G"; "H"]]
+        [["I"; "J"]; ["K"; "L"]]
+        [["M"; "N"]; ["O"; "P"]]
       ]),
-      ("[[[\"A\", \"B\"], [\"C\", \"D\"]], "
-      + "[[\"E\", \"F\"], [\"G\", \"H\"]], "
-      + "[[\"I\", \"J\"], [\"K\", \"L\"]], "
-      + "[[\"M\", \"N\"], [\"O\", \"P\"]]]"),
+      ("[[[\"A\"; \"B\"]; [\"C\"; \"D\"]]; "
+      + "[[\"E\"; \"F\"]; [\"G\"; \"H\"]]; "
+      + "[[\"I\"; \"J\"]; [\"K\"; \"L\"]]; "
+      + "[[\"M\"; \"N\"]; [\"O\"; \"P\"]]]"),
       "Array[Array[Array[String]]]"
     )
     
@@ -72,7 +72,7 @@ class TestInspect is UnitTest
                   map1("abc") = "ABC"
                   map1("xyz") = "XYZ"
                   map1),
-      "{\"abc\": \"ABC\", \"xyz\": \"XYZ\"}",
+      "{\"abc\"->\"ABC\"; \"xyz\"->\"XYZ\"}",
       "collections.Map[String, String]"
     )
     
