@@ -104,7 +104,9 @@ primitive Inspect
       end
       output.append(apply(ary))
     else
-      return "<uninspectable>"
+      output.>append("<uninspectable")
+            .>append((digestof input).string())
+            .>append(">")
     end
     
     output
