@@ -30,7 +30,7 @@ primitive Inspect
       let iter = x.values()
       try
         while iter.has_next() do
-          let byte = iter.next()
+          let byte = iter.next()?
           if byte == '"' then
             output.append("\\\"")
           elseif byte < 0x10 then
@@ -50,7 +50,7 @@ primitive Inspect
       let iter = x.values()
       try
         while iter.has_next() do
-          let byte = iter.next()
+          let byte = iter.next()?
           if byte == '\'' then
             output.append("'\\''")
           elseif byte < 0x10 then
@@ -73,7 +73,7 @@ primitive Inspect
       let iter = x.values()
       try
         while iter.has_next() do
-          output.append(apply(iter.next()))
+          output.append(apply(iter.next()?))
           if iter.has_next() then output.append("; ") end
         end
       end
@@ -83,7 +83,7 @@ primitive Inspect
       (let keys, let values) = (x.keys(), x.values())
       try
         while keys.has_next() do
-          (let key, let value) = (keys.next(), values.next())
+          (let key, let value) = (keys.next()?, values.next()?)
           output.append(apply(key))
           output.append("->")
           output.append(apply(value))
@@ -100,7 +100,7 @@ primitive Inspect
       let ary = Array[U8]
       var i: USize = 0
       while i < x.size() do
-        ary.push(try x.peek_u8(i = i + 1) else 0 end)
+        ary.push(try x.peek_u8(i = i + 1)? else 0 end)
       end
       output.append(apply(ary))
     else
